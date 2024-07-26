@@ -13,7 +13,7 @@ services:
     volumes:
       - postgres_vol:/var/lib/postgresql/data
     networks:
-      - otus_network
+      - network
   script:
     build: .\docker_postgres
 
@@ -38,7 +38,7 @@ services:
       - DB_URL=jdbc:postgresql://postgres_db/otus_highload
 #      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db/otus_highload
     networks:
-      - otus_network
+      - network
 
   auth-gateway:
     image: auth-gateway:0.0.1-snapshot
@@ -53,10 +53,10 @@ services:
       - SERVER_PORT=11555
       - MS_USER_ROUTE=http://ms-user:11100
     networks:
-      - otus_network
+      - network
 
 volumes:
   postgres_vol:
 
 networks:
-  otus_network:
+  network:
