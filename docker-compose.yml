@@ -1,0 +1,62 @@
+version: '3.8'
+services:
+  postgres_db:
+    image: postgres:12.19
+    restart: always
+    environment:
+     - POSTGRES_USER=usr
+     - POSTGRES_PASSWORD=pwd
+     - POSTGRES_DB=otus_highload
+     - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres_vol:/var/lib/postgresql/data
+    networks:
+      - otus_network
+  script:
+    build: .\docker_postgres
+
+  # microservices
+  ms-user:
+    image: ms-user:0.0.1-snapshot
+    build:
+      context: .\ms-user
+      dockerfile: Dockerfile
+    ports:
+      - "11100:11100"
+    depends_on:
+      - postgres_db
+    environment:
+      - SERVER_PORT=11100
+      - DB_USER=usr
+      - DB_PASS=pwd
+#      - DB_HOST=host.docker.internal
+#      - DB_PORT=5432
+#      - DB_NAME=otus_highload
+      - DB_SCHEMA=otus_user
+      - DB_URL=jdbc:postgresql://postgres_db/otus_highload
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db/otus_highload
+    networks:
+      - otus_network
+
+  auth-gateway:
+    image: auth-gateway:0.0.1-snapshot
+    build:
+      context: .\auth-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "11555:11555"
+    depends_on:
+      - ms-user
+    environment:
+      - SERVER_PORT=11555
+      - MS_USER_ROUTE=http://ms-user:11100
+    networks:
+      - otus_network
+
+volumes:
+  postgres_vol:
+
+networks:
+  otus_network:
