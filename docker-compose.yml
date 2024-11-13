@@ -19,7 +19,7 @@ services:
 
   # microservices
   ms-user:
-    image: ms-user:0.0.1-snapshot
+    image: ms-user:1.1.0-snapshot
     build:
       context: .\ms-user
       dockerfile: Dockerfile
@@ -31,17 +31,13 @@ services:
       - SERVER_PORT=11100
       - DB_USER=usr
       - DB_PASS=pwd
-#      - DB_HOST=host.docker.internal
-#      - DB_PORT=5432
-#      - DB_NAME=otus_highload
       - DB_SCHEMA=otus_user
       - DB_URL=jdbc:postgresql://postgres_db/otus_highload
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db/otus_highload
     networks:
       - network
 
   auth-gateway:
-    image: auth-gateway:0.0.1-snapshot
+    image: auth-gateway:1.1.0-snapshot
     build:
       context: .\auth-gateway
       dockerfile: Dockerfile
