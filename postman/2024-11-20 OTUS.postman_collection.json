@@ -1,0 +1,871 @@
+{
+	"info": {
+		"_postman_id": "9608de02-bf61-4824-8fa6-d10f1f52e04a",
+		"name": "OTUS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ms-user",
+			"item": [
+				{
+					"name": "POSTS",
+					"item": [
+						{
+							"name": "AGW - friend registraton",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code == 200) {\r",
+											"    pm.environment.set(\"friendId\", pm.response.jsonData.id)\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"firstName\": \"Аня\",\r\n  \"secondName\": \"Каренова\",\r\n  \"birthdate\": \"1885-06-15\",\r\n  \"sex\": \"FEMALE\",\r\n  \"city\": \"Рязань\",\r\n  \"username\": \"ann_poezd\",\r\n  \"password\": \"byebye\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{agw uri}}/ms-user/registration",
+									"host": [
+										"{{agw uri}}"
+									],
+									"path": [
+										"ms-user",
+										"registration"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AGW - add friend Ann",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{agw uri}}/ms-user/friend/{{friendId}}",
+									"host": [
+										"{{agw uri}}"
+									],
+									"path": [
+										"ms-user",
+										"friend",
+										"{{friendId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AGW - get friends page Rodya",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{agw uri}}/ms-user/friend?pageSize=5&pageNum=1",
+									"host": [
+										"{{agw uri}}"
+									],
+									"path": [
+										"ms-user",
+										"friend"
+									],
+									"query": [
+										{
+											"key": "pageSize",
+											"value": "5"
+										},
+										{
+											"key": "pageNum",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AGW - get friends page Ann",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{friendToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{agw uri}}/ms-user/friend?pageSize=500&pageNum=1",
+									"host": [
+										"{{agw uri}}"
+									],
+									"path": [
+										"ms-user",
+										"friend"
+									],
+									"query": [
+										{
+											"key": "pageSize",
+											"value": "500"
+										},
+										{
+											"key": "pageNum",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AGW - login by friend",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code == 200) {\r",
+											"    pm.environment.set(\"friendToken\", pm.response.text())\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"ann_poezd\",\r\n  \"password\": \"byebye\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{agw uri}}/ms-user/login",
+									"host": [
+										"{{agw uri}}"
+									],
+									"path": [
+										"ms-user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AGW - add Post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code == 200) {\r",
+											"    pm.environment.set(\"friendPostId\", pm.response.json().id)\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{friendToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"text\": \"Вот уже поезд... переехал\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{agw uri}}/ms-user/post",
+									"host": [
+										"{{agw uri}}"
+									],
+									"path": [
+										"ms-user",
+										"post"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AGW - update Post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{friendToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"text\": \"Вот уже поезд...ушел\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{agw uri}}/ms-user/post/{{friendPostId}}",
+									"host": [
+										"{{agw uri}}"
+									],
+									"path": [
+										"ms-user",
+										"post",
+										"{{friendPostId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AGW - get Post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{friendToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{agw uri}}/ms-user/post/{{friendPostId}}",
+									"host": [
+										"{{agw uri}}"
+									],
+									"path": [
+										"ms-user",
+										"post",
+										"{{friendPostId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AGW - delete Post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{friendToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{agw uri}}/ms-user/post/{{friendPostId}}",
+									"host": [
+										"{{agw uri}}"
+									],
+									"path": [
+										"ms-user",
+										"post",
+										"{{friendPostId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AGW - get Ann's friends posts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{friendToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{agw uri}}/ms-user/post/feed?pageSize=20&pageNum=1",
+									"host": [
+										"{{agw uri}}"
+									],
+									"path": [
+										"ms-user",
+										"post",
+										"feed"
+									],
+									"query": [
+										{
+											"key": "pageSize",
+											"value": "20"
+										},
+										{
+											"key": "pageNum",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "AGW - registraton",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Родя\",\r\n  \"secondName\": \"Разломников\",\r\n  \"birthdate\": \"1875-02-03\",\r\n  \"sex\": \"MALE\",\r\n  \"city\": \"Петроград\",\r\n  \"username\": \"topor\",\r\n  \"password\": \"babkasuka1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{agw uri}}/ms-user/registration",
+							"host": [
+								"{{agw uri}}"
+							],
+							"path": [
+								"ms-user",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AGW - login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code == 200) {\r",
+									"    pm.environment.set(\"token\", pm.response.text())\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"topor\",\r\n  \"password\": \"babkasuka1\"\r\n}\r\n// {\r\n//   \"username\": \"{{username}}\",\r\n//   \"password\": \"{{password}}\"\r\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{agw uri}}/ms-user/login",
+							"host": [
+								"{{agw uri}}"
+							],
+							"path": [
+								"ms-user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AGW - get user",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{agw uri}}/ms-user/user/ac172001-9325-1ed0-8193-25cfe2720000",
+							"host": [
+								"{{agw uri}}"
+							],
+							"path": [
+								"ms-user",
+								"user",
+								"ac172001-9325-1ed0-8193-25cfe2720000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AGW - get current user",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{agw uri}}/ms-user/user/current",
+							"host": [
+								"{{agw uri}}"
+							],
+							"path": [
+								"ms-user",
+								"user",
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AGW - search users by names",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{agw uri}}/ms-user/user/search?first_name=Ива&last_name=Абр",
+							"host": [
+								"{{agw uri}}"
+							],
+							"path": [
+								"ms-user",
+								"user",
+								"search"
+							],
+							"query": [
+								{
+									"key": "first_name",
+									"value": "Ива"
+								},
+								{
+									"key": "last_name",
+									"value": "Абр"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AGW - add friend",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{agw uri}}/ms-user/friend/39ebfa2f-6b34-4628-bf6e-97541c2da064",
+							"host": [
+								"{{agw uri}}"
+							],
+							"path": [
+								"ms-user",
+								"friend",
+								"39ebfa2f-6b34-4628-bf6e-97541c2da064"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AGW - get friends page",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{agw uri}}/ms-user/friend?pageSize=5&pageNum=1",
+							"host": [
+								"{{agw uri}}"
+							],
+							"path": [
+								"ms-user",
+								"friend"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "5"
+								},
+								{
+									"key": "pageNum",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "ms-dialogs",
+			"item": [
+				{
+					"name": "AGW - login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code == 200) {\r",
+									"    pm.environment.set(\"token\", pm.response.text())\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"topor\",\r\n  \"password\": \"babkasuka1\"\r\n}\r\n// {\r\n//   \"username\": \"{{username}}\",\r\n//   \"password\": \"{{password}}\"\r\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{agw uri}}/ms-user/login",
+							"host": [
+								"{{agw uri}}"
+							],
+							"path": [
+								"ms-user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AGW - get self (Rodya)",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{agw uri}}/ms-user/user/current",
+							"host": [
+								"{{agw uri}}"
+							],
+							"path": [
+								"ms-user",
+								"user",
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AGW - get dialog Rodya with Ann",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{agw uri}}/ms-dialogs/dialog/ac172001-9327-19ff-8193-2770af5f0000/list",
+							"host": [
+								"{{agw uri}}"
+							],
+							"path": [
+								"ms-dialogs",
+								"dialog",
+								"ac172001-9327-19ff-8193-2770af5f0000",
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
